@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <title>Мини-движок для игр</title>
+    <script src='scripts/prettify/prettify.js'></script>
+    <script src='scripts/prettify/lang-css.js'></script>
+    <!--[if lt IE 9]>
+    <script src='//html5shiv.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]-->
+    <link type='text/css' rel='stylesheet' href='styles/prettify-tomorrow.css'>
+    <link type='text/css' rel='stylesheet' href='styles/jsdoc-default.css'>
+    <style>
+        .page-root {
+            display: flex;
+            flex-direction: row;
+            margin: auto;
+            max-width: 1280px;
+        }
+
+        h3.subsection-title {
+            margin-bottom: 0;
+            margin-top: 40px;
+        }
+
+        .item-container {
+            background-color: #fafafa;
+            padding-bottom: 8px;
+        }
+
+        .item-container > .name {
+            background-color: #e2e2e2;
+            padding: 4px 12px;
+            margin-bottom: 0;
+            margin-top: 16px;
+        }
+
+        .item-container > .description {
+            padding: 4px 12px;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+
+        .item-container > h5 {
+            padding: 4px 12px;
+        }
+
+        .item-container > .params {
+            margin: 4px 12px;
+        }
+
+        .item-container > .props {
+            margin: 4px 12px;
+        }
+
+        .item-container > .details {
+            display: none;
+        }
+
+        .item-container > .param-type {
+            padding: 4px 12px;
+        }
+
+        .item-container > .param-desc {
+            padding: 4px 12px;
+        }
+
+        .item-container > dl {
+            display: flex;
+            flex-direction: row;
+            padding: 4px 12px;
+            margin: 0;
+        }
+
+        li:not(:first-child) > h5 {
+            margin-top: 24px;
+        }
+
+        header pre {
+            white-space: pre-line;
+            padding: 8px 32px;
+            background-color: #e2e2e2;
+        }
+
+        #main {
+            float: none;
+        }
+
+        nav {
+            float: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding-top: 16px;
+            padding-bottom: 64px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+<div class='page-root'>
+<div id='main'>
+    <section>
+        <header id='overview'>
+            <h2>Мини-движок для игр</h2>
+            <div>
+                Движок основан на jQuery и предоставляет небольшой набор функций для создания простейших игр,
+                используя обычные jQuery-элементы в качестве игровых объектов.
+                <br /><br />
+
+                <h3>Список возможностей:</h3>
+                <ul>
+                    <li>Создание и управление объектами на игровом поле</li>
+                    <li>Базовая физика (проверка столконвений, перемещение с учетом препятствий)</li>
+                    <li>Панель состояния, на которой можно отобразить счет и прочую информацию</li>
+                    <li>Набор функций для работы с клавиатурой и мышью</li>
+                    <li>Прочие утилитные функции для работы с прямоугольниками</li>
+                </ul>
+
+                <h3>Базовый пример</h3>
+
+                Сперва движок нужно настроить и запустить:
+                <pre>
+                    engine.setWorldSize(400, 400);
+                    engine.setTps(60);
+                    engine.gameLoop();
+                </pre>
+
+                Затем можно создать объект игрока:
+                <pre>
+                    var $player = engine.createElement('player', 180, 180, 40, 40);
+                    engine.addElementToWorld($player);
+                </pre>
+
+                Однако, без стилей игрока не будет видно, поэтому добавим немного стилей:
+                <pre>
+                    .player {
+                    &nbsp;&nbsp;&nbsp;&nbsp;background-color: #0f74a8;
+                    }
+                </pre>
+
+                И, наконец, отправим игрока куда-нибудь на тот свет:
+                <pre>
+                    engine.setUpdateCallback(() => {
+                    &nbsp;&nbsp;&nbsp;&nbsp;var position = engine.getElementPosition($player);
+                    &nbsp;&nbsp;&nbsp;&nbsp;engine.setElementPosition($player, position.x + 1, position.y - 1);
+                    });
+                </pre>
+
+                Готово! Теперь мы можем увидеть игрока посреди поля, убегающего куда-то далеко-далеко.<br /><br />
+                <b>Дальше - сами. Удачи!</b>
+            </div>
+        </header>
+        <article>
+            <h3 class='subsection-title'>Общие настройки игры</h3>
+            <div class='item-container'>
+                <h4 class='name' id='gameLoop'><span
+                    class='type-signature'></span>gameLoop<span class='signature'>()</span><span
+                    class='type-signature'></span></h4>
+                <div class='description'>
+                    Функция, которая запускает главный игровой цикл. Должна быть вызвана единожды в момент запуска игры.
+                </div>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line55'>line 55</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setUpdateCallback'><span class='type-signature'></span>setUpdateCallback<span
+                    class='signature'>(callback)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Устанавливает колбек, который будет вызываться каждый игровой тик.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>callback</code></td>
+                        <td class='type'>
+                            <span class='param-type'>function</span>
+                        </td>
+                        <td class='description last'>Функция, не принимающая параметров.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line85'>line 85</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setDisplayCallback'><span
+                    class='type-signature'></span>setDisplayCallback<span
+                    class='signature'>(callback)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Устанавливает колбек, который будет вызываться при каждой перерисовке.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>callback</code></td>
+                        <td class='type'>
+                            <span class='param-type'>function</span>
+                        </td>
+                        <td class='description last'>Функция, принимающая время, прошедшее с прошлого игрового кадра.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line94'>line 94</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setTps'><span class='type-signature'></span>setTps<span
+                    class='signature'>(newTps)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Устанавливает частоту игровых тиков.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>newTps</code></td>
+                        <td class='type'>
+                            <span class='param-type'>int</span>
+                        </td>
+                        <td class='description last'>Количество тиков в секунду.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line103'>line 103</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+
+            <h3 class='subsection-title'>Нижняя панель</h3>
+            <div class='item-container'>
+                <h4 class='name' id='addBarElement'><span class='type-signature'></span>addBarElement<span
+                class='signature'>(initialText)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Добавляет новый элемент на нижнюю панель.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>initialText</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='description last'>Изначальный текст этого элемента.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line117'>line 117</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setBarElementText'><span class='type-signature'></span>setBarElementText<span
+                    class='signature'>($element, text)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Задает элементу нижней панели новый текст.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, текст которого нужно изменить.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>text</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='description last'>Новый текст этого элемента.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line135'>line 135</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+
+            <h3 class='subsection-title'>Управление игровым полем</h3>
+            <div class='item-container'>
+                <h4 class='name' id='addElementToWorld'><span class='type-signature'></span>addElementToWorld<span
+                class='signature'>($element)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Добавляет на игровое поле новый элемент.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, текст которого нужно изменить.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line148'>line 148</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='createElement'><span class='type-signature'></span>createElement<span
+                    class='signature'>(elementClass, x, y, w, h)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Создает новый элемент, который можно будет добавить на игровое поле.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>elementClass</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='description last'>Класс элемента. Служит одновременно для определения типа элемента и
+                            как
+                            css-класс.
+                            Может быть любой строкой, состоящей из английских букв, цифр и символов "-" и "_".
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>x</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>X-координата элемента.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>y</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Y-координата элемента.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>w</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Ширина элемента.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>h</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Высота элемента.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line162'>line 162</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setWorldSize'><span class='type-signature'></span>setWorldSize<span
+                    class='signature'>(width, height)</span><span
+                    class='type-signature'></span></h4>
+                <div class='description'>
+                    Изменяет размеры игрового поля.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>width</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Ширина игрового поля.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>height</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Высота игрового поля.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line177'>line 177</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='moveElementToRandomFreePlace'><span
+                    class='type-signature'></span>moveElementToRandomFreePlace<span
+                    class='signature'>($element, obstacleClasses)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Перемещает элемент в случайное свободное место, учитывая препятствия.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, который нужно переместить.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>obstacleClasses</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string[]</span>
+                        </td>
+                        <td class='description last'>Список классов, которые считаются препятствиями.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line190'>line 190</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='findRandomFreePlaceForElement'><span
+                    class='type-signature'></span>findRandomFreePlaceForElement<span
+                    class='signature'>($element, obstacleClasses)</span><span class='type-signature'> &rarr; {<a
+                    href='index.html#Position'>Position</a>}</span></h4>
+                <div class='description'>
+                    Находит для элемента случайное свободное место, учитывая препятствия.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, для которого нужно найти свободное место.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>obstacleClasses</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string[]</span>
+                        </td>
+                        <td class='description last'>Список классов, которые считаются препятствиями.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line204'>line 204</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    <a href='index.html#Position'>Position</a>
+                </span>
+                <span class='param-desc'>
+                    Координаты найденного свободного места.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='isPlaceFreeForElement'><span
+                    class='type-signature'></span>isPlaceFreeForElement<span
+                    class='signature'>($element, x, y, obstacleClasses)</span><span
+                    class='type-signature'> &rarr; {boolean}</span></h4>
+                <div class='description'>
+                    Проверяет, свободное ли указанное место для элемента, учитывая препятствия.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, для которого нужно проверить свободное место.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>x</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>X-координата проверяемого места.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>y</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Y-координата проверяемого места.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>obstacleClasses</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string[]</span>
+                        </td>
+                        <td class='description last'>Список классов, которые считаются препятствиями.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line229'>line 229</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    boolean
+                </span>
+                <span class='param-desc'>
+                    <code>true</code>, если место свободно, иначе - <code>false</code>.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='isElementsIntersects'><span
+                    class='type-signature'></span>isElementsIntersects<span
+                    class='signature'>($a, $b)</span><span class='type-signature'> &rarr; {boolean}</span></h4>
+                <div class='description'>
+                    Проверяет, пересекаются ли элементы.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$a</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Первый элемент.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>$b</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Второй элемент.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line253'>line 253</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    boolean
+                </span>
+                <span class='param-desc'>
+                    <code>true</code>, если элементы пересекаются, иначе - <code>false</code>.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getAllElementsOfClasses'><span
+                    class='type-signature'></span>getAllElementsOfClasses<span class='signature'>(classes)</span><span
+                    class='type-signature'> &rarr; {jQuery}</span></h4>
+                <div class='description'>
+                    Ищет все элементы, имеющие указанные классы.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>classes</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string[]</span>
+                        </td>
+                        <td class='description last'>Список классов, по которым нужно фильтровать элементы.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line267'>line 267</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    jQuery[]
+                </span>
+                <span class='param-desc'>
+                    Список элементов, которые подходят под указанные классы.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getAllElementsOfClass'><span
+                    class='type-signature'></span>getAllElementsOfClass<span
+                    class='signature'>(elementClass)</span><span class='type-signature'> &rarr; {jQuery}</span></h4>
+                <div class='description'>
+                    Ищет все элементы, имеющие указанный класс.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>elementClass</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='description last'>Класс, по которому нужно фильтровать элементы.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line288'>line 288</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    jQuery[]
+                </span>
+                <span class='param-desc'>
+                    Список элементов, которые подходят под указанный класс.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getRandomPosition'><span class='type-signature'></span>getRandomPosition<span
+                    class='signature'>()</span><span class='type-signature'> &rarr; {<a
+                    href='index.html#Position'>Position</a>}</span></h4>
+                <div class='description'>
+                    Возвращает случайную позицию на карте.
+                </div>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line300'>line 300</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    <a href='index.html#Position'>Position</a>
+                </span>
+                <span class='param-desc'>
+                    Координаты случайной позиции.
+                </span>
+            </div>
+
+            <h3 class='subsection-title'>Управление элементами на игровом поле</h3>
+            <div class='item-container'>
+                <h4 class='name' id='moveElementAvoidingObstacles'><span
+                    class='type-signature'></span>moveElementAvoidingObstacles<span
+                    class='signature'>($element, x, y, obstacleClasses)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Попиксельно перемещает элемент в направлении указанной позиции, упираясь в препятствия.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, который нужно переместить в указанную позицию.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>x</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>X-координата позиции.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>y</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Y-координата позиции.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>obstacleClasses</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string[]</span>
+                        </td>
+                        <td class='description last'>Список классов, которые считаются препятствиями.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line319'>line 319</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='moveElementBy'><span class='type-signature'></span>moveElementBy<span
+                    class='signature'>($element, x, y)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Перемещает элемент на указанное расстояние.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, который нужно переместить на указанное расстояние.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>x</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>На сколько нужно переместить элемент по X-координате.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>y</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>На сколько нужно переместить элемент по Y-координате.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line345'>line 345</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setElementHasClass'><span
+                    class='type-signature'></span>setElementHasClass<span
+                    class='signature'>($element, className, isSet)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Добавляет или удаляет элементу определенный класс.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, которому нужно добавить или удалить класс.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>className</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='description last'>Имя класса, который нужно добавить или удалить.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>isSet</code></td>
+                        <td class='type'>
+                            <span class='param-type'>boolean</span>
+                        </td>
+                        <td class='description last'><code>true</code> - если класс нужно добавить, <code>false</code> -
+                            если удалить.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line358'>line 358</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='isElementHasClass'><span class='type-signature'></span>isElementHasClass<span
+                    class='signature'>($element, className)</span><span class='type-signature'> &rarr; {boolean}</span></h4>
+                <div class='description'>
+                    Проверяет, есть ли у элемента определенный класс.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, у которого нужно проверить класс.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>className</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='description last'>Имя класса, который нужно проверить.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line370'>line 370</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    boolean
+                </span>
+                <span class='param-desc'>
+                    <code>true</code> - если элемент имеет указанный класс, иначе - <code>false</code>.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getElementBoundingRect'><span
+                    class='type-signature'></span>getElementBoundingRect<span
+                    class='signature'>($element)</span><span class='type-signature'> &rarr; {<a
+                    href='index.html#Rectangle'>Rectangle</a>}</span></h4>
+                <div class='description'>
+                    Возвращает объект с информацией о прямоугольнике, описывающем занимаемую элементом область.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, о занимаемой области которого нужно получить информацию.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line381'>line 381</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    <a href='index.html#Rectangle'>Rectangle</a>
+                </span>
+                <span class='param-desc'>
+                    прямоугольник, описывающий занимаемую элементом область.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setElementSize'><span class='type-signature'></span>setElementSize<span
+                    class='signature'>($element, width, height)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Устанавливает элементу новый размер.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, которому нужно изменить размер.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>width</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Новая ширина элемента.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>height</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Новая высота элемента.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line395'>line 395</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getElementSize'><span class='type-signature'></span>getElementSize<span
+                    class='signature'>($element)</span><span class='type-signature'> &rarr; {<a
+                    href='index.html#Dimension'>Dimension</a>}</span></h4>
+                <div class='description'>
+                    Возвращает размеры элемента.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, размеры которого нужно получить.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line409'>line 409</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    <a href='index.html#Dimension'>Dimension</a>
+                </span>
+                <span class='param-desc'>
+                    размеры указанного элемента.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setElementPosition'><span
+                    class='type-signature'></span>setElementPosition<span
+                    class='signature'>($element, x, y)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Устанавливает элементу новые координаты.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, которому нужно изменить размер.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>x</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Новая X-координата элемента.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>y</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Новая Y-координата элемента.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line423'>line 423</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getElementPosition'><span
+                    class='type-signature'></span>getElementPosition<span
+                    class='signature'>($element)</span><span class='type-signature'> &rarr; {<a href='index.html#Position'>Position</a>}</span>
+                </h4>
+                <div class='description'>
+                    Возвращает координаты элемента.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, координаты которого нужно получить.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line438'>line 438</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    <a href='index.html#Position'>Position</a>
+                </span>
+                <span class='param-desc'>
+                    координаты указанного элемента.
+                </span>
+            </div>
+
+            <h3 class='subsection-title'>Работа с клавиатурой</h3>
+            <div class='item-container'>
+                <h4 class='name' id='bindKeyboardListeners'><span
+                    class='type-signature'></span>bindKeyboardListeners<span
+                    class='signature'>()</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Активирует ввод с помощью клавиатуры.
+                </div>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line461'>line 461</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setKeyDownListener'><span
+                    class='type-signature'></span>setKeyDownListener<span
+                    class='signature'>(listener)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Устанавливает колбек на нажатия клавиш на клавиатуре.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>listener</code></td>
+                        <td class='type'>
+                            <span class='param-type'>function</span>
+                        </td>
+                        <td class='description last'>Колбек.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line478'>line 478</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setKeyUpListener'><span class='type-signature'></span>setKeyUpListener<span
+                    class='signature'>(listener)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Устанавливает колбек на отжатия клавиш на клавиатуре.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>listener</code></td>
+                        <td class='type'>
+                            <span class='param-type'>function</span>
+                        </td>
+                        <td class='description last'>Колбек.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line487'>line 487</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='isAnyKeyDown'><span class='type-signature'></span>isAnyKeyDown<span
+                    class='signature'>(&hellip;codes)</span><span
+                    class='type-signature'> &rarr; {boolean}</span></h4>
+                <div class='description'>
+                    Проверяет, нажата ли на данный момент любая из указанных клавиш на клавиатуре.<br />
+
+                    <a href='https://www.toptal.com/developers/keycode' target='_blank'>
+                        Сайт, на котором можно потестить кнопки
+                    </a>
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th>Attributes</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>codes</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='attributes'>
+                            &lt;repeatable><br>
+                        </td>
+                        <td class='description last'>
+                            Список клавиш, одна из которых может быть нажата.<br />
+                            Для проверки используется поле <code>event.code</code>.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line497'>line 497</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    boolean
+                </span>
+                <span class='param-desc'>
+                    <code>true</code> - если любая из указанных клавиш нажата, иначе - <code>false</code>.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='isKeyDown'><span
+                    class='type-signature'></span>isKeyDown<span
+                    class='signature'>(code)</span><span class='type-signature'> &rarr; {boolean}</span></h4>
+                <div class='description'>
+                    Проверяет, нажата ли на данный момент указанная клавиша на клавиатуре.<br />
+
+                    <a href='https://www.toptal.com/developers/keycode' target='_blank'>
+                        Сайт, на котором можно потестить кнопки
+                    </a>
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>code</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='description last'>
+                            Клавиша, которая может быть нажата.<br />
+                            Для проверки используется поле <code>event.code</code>.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line512'>line 512</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    boolean
+                </span>
+                <span class='param-desc'>
+                    <code>true</code> - если указанная клавиша нажата, иначе - <code>false</code>.
+                </span>
+            </div>
+
+            <h3 class='subsection-title'>Работа с мышью</h3>
+            <div class='item-container'>
+                <h4 class='name' id='bindMouseListeners'><span
+                    class='type-signature'></span>bindMouseListeners<span
+                    class='signature'>()</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Активирует ввод с помощью мыши.
+                </div>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line523'>line 523</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setMouseDownListener'><span
+                    class='type-signature'></span>setMouseDownListener<span
+                    class='signature'>(listener)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Устанавливает колбек на нажатия кнопок мыши.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>listener</code></td>
+                        <td class='type'>
+                            <span class='param-type'>function</span>
+                        </td>
+                        <td class='description last'>Колбек.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line549'>line 549</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='setMouseUpListener'><span
+                    class='type-signature'></span>setMouseUpListener<span
+                    class='signature'>(listener)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Устанавливает колбек на отжатия кнопок мыши.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>listener</code></td>
+                        <td class='type'>
+                            <span class='param-type'>function</span>
+                        </td>
+                        <td class='description last'>Колбек.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line558'>line 558</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='isAnyButtonDown'><span class='type-signature'></span>isAnyButtonDown<span
+                    class='signature'>(&hellip;buttons)</span><span class='type-signature'> &rarr; {boolean}</span></h4>
+                <div class='description'>
+                    Проверяет, нажата ли на данный момент любая из указанных кнопок мыши.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th>Attributes</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>buttons</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='attributes'>
+                            &lt;repeatable><br>
+                        </td>
+                        <td class='description last'>
+                            Список кнопок, одна из которых может быть нажата.<br />
+                            Для проверки используется поле <code>event.button</code>.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line568'>line 568</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    boolean
+                </span>
+                <span class='param-desc'>
+                    <code>true</code> - если любая из указанных кнопок нажата, иначе - <code>false</code>.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='isButtonDown'><span class='type-signature'></span>isButtonDown<span
+                    class='signature'>(button)</span><span
+                    class='type-signature'> &rarr; {boolean}</span></h4>
+                <div class='description'>
+                    Проверяет, нажата ли на данный момент указанная кнопка мыши.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>button</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='description last'>
+                            Кнопка, которая может быть нажата.<br />
+                            Для проверки используется поле <code>event.button</code>.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line583'>line 583</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    boolean
+                </span>
+                <span class='param-desc'>
+                    <code>true</code> - если указанная кнопка нажата, иначе - <code>false</code>.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getMouseX'><span
+                    class='type-signature'></span>getMouseX<span
+                    class='signature'>()</span><span class='type-signature'> &rarr; {number}</span></h4>
+                <div class='description'>
+                    Возвращает текущую X-координату мыши.
+                </div>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line592'>line 592</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    number
+                </span>
+                <span class='param-desc'>
+                    X-координата мыши.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getMouseY'><span
+                    class='type-signature'></span>getMouseY<span
+                    class='signature'>()</span><span class='type-signature'> &rarr; {number}</span></h4>
+                <div class='description'>
+                    Возвращает текущую Y-координату мыши.
+                </div>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line601'>line 601</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    number
+                </span>
+                <span class='param-desc'>
+                    Y-координата мыши.
+                </span>
+            </div>
+
+            <h3 class='subsection-title'>Прочее</h3>
+            <div class='item-container'>
+                <h4 class='name' id='isRectanglesIntersects'><span
+                    class='type-signature'></span>isRectanglesIntersects<span
+                    class='signature'>(a, b)</span><span class='type-signature'> &rarr; {boolean}</span></h4>
+                <div class='description'>
+                    Проверяет, пересекаются ли указанные прямоугольники.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>a</code></td>
+                        <td class='type'>
+                            <span class='param-type'><a href='index.html#Rectangle'>Rectangle</a></span>
+                        </td>
+                        <td class='description last'>Первый прямоугольник.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>b</code></td>
+                        <td class='type'>
+                            <span class='param-type'><a href='index.html#Rectangle'>Rectangle</a></span>
+                        </td>
+                        <td class='description last'>Второй прямоугольник.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line616'>line 616</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    boolean
+                </span>
+                <span class='param-desc'>
+                    <code>true</code> - если прямоугольники пересекаются, иначе - <code>false</code>.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='createBoundingRect'><span
+                class='type-signature'></span>createBoundingRect<span
+                class='signature'>(position, size)</span><span class='type-signature'> &rarr; {<a
+                href='index.html#Rectangle'>Rectangle</a>}</span></h4>
+                <div class='description'>
+                    Создает прямоугольник с указанными координатами и размерами.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>position</code></td>
+                        <td class='type'>
+                            <span class='param-type'><a href='index.html#Position'>Position</a></span>
+                        </td>
+                        <td class='description last'>Координаты прямоугольника</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>size</code></td>
+                        <td class='type'>
+                            <span class='param-type'><a href='index.html#Dimension'>Dimension</a></span>
+                        </td>
+                        <td class='description last'>Размеры прямоугольника</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line630'>line 630</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    <a href='index.html#Rectangle'>Rectangle</a>
+                </span>
+                <span class='param-desc'>
+                    прямоугольник с указанными координатами и размерами
+                </span>
+            </div>
+
+            <h3 class='subsection-title'>Типы объектов</h3>
+            <div class='item-container'>
+                <h4 class='name' id='Dimension'>Dimension</h4>
+                <div class='description'>
+                    Объект, хранящий ширину и высоту.
+                </div>
+                <h5 class='subsection-title'>Свойства:</h5>
+                <table class='props'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>width</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Ширина.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>height</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Высота.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line8'>line 8</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='Position'>Position</h4>
+                <div class='description'>
+                    Объект, хранящий координаты X и Y.
+                </div>
+                <h5 class='subsection-title'>Свойства:</h5>
+                <table class='props'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>x</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>X-координата.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>y</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Y-координата.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line2'>line 2</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='Rectangle'>Rectangle</h4>
+                <div class='description'>
+                    Объект, хранящий информацию о прямоугольнике.
+                </div>
+                <h5 class='subsection-title'>Свойства:</h5>
+                <table class='props'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>x</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>X-координата.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>y</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Y-координата.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>width</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Ширина.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>height</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Высота.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>minX</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Минимальная X-координата.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>minY</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Минимальная Y-координата.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>maxX</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Максимальная X-координата.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>maxY</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Максимальная Y-координата.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line14'>line 14</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+        </article>
+    </section>
+</div>
+<nav>
+    <ul>
+        <li><h5>Мини-движок для игр</h5></li>
+        <li><a href='index.html#overview'>Введение</a></li>
+
+        <li><h5>Общие настройки игры</h5></li>
+        <li><a href='index.html#gameLoop'>gameLoop</a></li>
+        <li><a href='index.html#setUpdateCallback'>setUpdateCallback</a></li>
+        <li><a href='index.html#setDisplayCallback'>setDisplayCallback</a></li>
+        <li><a href='index.html#setTps'>setTps</a></li>
+
+        <li><h5>Нижняя панель</h5></li>
+        <li><a href='index.html#addBarElement'>addBarElement</a></li>
+        <li><a href='index.html#setBarElementText'>setBarElementText</a></li>
+
+        <li><h5>Управление игровым полем</h5></li>
+        <li><a href='index.html#addElementToWorld'>addElementToWorld</a></li>
+        <li><a href='index.html#createElement'>createElement</a></li>
+        <li><a href='index.html#setWorldSize'>setWorldSize</a></li>
+        <li><a href='index.html#moveElementToRandomFreePlace'>moveElementToRandomFreePlace</a></li>
+        <li><a href='index.html#findRandomFreePlaceForElement'>findRandomFreePlaceForElement</a></li>
+        <li><a href='index.html#isPlaceFreeForElement'>isPlaceFreeForElement</a></li>
+        <li><a href='index.html#isElementsIntersects'>isElementsIntersects</a></li>
+        <li><a href='index.html#getAllElementsOfClasses'>getAllElementsOfClasses</a></li>
+        <li><a href='index.html#getAllElementsOfClass'>getAllElementsOfClass</a></li>
+        <li><a href='index.html#getRandomPosition'>getRandomPosition</a></li>
+
+        <li><h5>Управление элементами на игровом поле</h5></li>
+        <li><a href='index.html#moveElementAvoidingObstacles'>moveElementAvoidingObstacles</a></li>
+        <li><a href='index.html#moveElementBy'>moveElementBy</a></li>
+        <li><a href='index.html#setElementHasClass'>setElementHasClass</a></li>
+        <li><a href='index.html#isElementHasClass'>isElementHasClass</a></li>
+        <li><a href='index.html#getElementBoundingRect'>getElementBoundingRect</a></li>
+        <li><a href='index.html#setElementSize'>setElementSize</a></li>
+        <li><a href='index.html#getElementSize'>getElementSize</a></li>
+        <li><a href='index.html#setElementPosition'>setElementPosition</a></li>
+        <li><a href='index.html#getElementPosition'>getElementPosition</a></li>
+
+        <li><h5>Работа с клавиатурой</h5></li>
+        <li><a href='index.html#bindKeyboardListeners'>bindKeyboardListeners</a></li>
+        <li><a href='index.html#setKeyDownListener'>setKeyDownListener</a></li>
+        <li><a href='index.html#setKeyUpListener'>setKeyUpListener</a></li>
+        <li><a href='index.html#isAnyKeyDown'>isAnyKeyDown</a></li>
+        <li><a href='index.html#isKeyDown'>isKeyDown</a></li>
+
+        <li><h5>Работа с мышью</h5></li>
+        <li><a href='index.html#bindMouseListeners'>bindMouseListeners</a></li>
+        <li><a href='index.html#setMouseDownListener'>setMouseDownListener</a></li>
+        <li><a href='index.html#setMouseUpListener'>setMouseUpListener</a></li>
+        <li><a href='index.html#isAnyButtonDown'>isAnyButtonDown</a></li>
+        <li><a href='index.html#isButtonDown'>isButtonDown</a></li>
+        <li><a href='index.html#getMouseX'>getMouseX</a></li>
+        <li><a href='index.html#getMouseY'>getMouseY</a></li>
+
+        <li><h5>Прочее</h5></li>
+        <li><a href='index.html#isRectanglesIntersects'>isRectanglesIntersects</a></li>
+        <li><a href='index.html#createBoundingRect'>createBoundingRect</a></li>
+
+        <li><h5>Типы объектов</h5></li>
+        <li><a href='index.html#Dimension'>Dimension</a></li>
+        <li><a href='index.html#Position'>Position</a></li>
+        <li><a href='index.html#Rectangle'>Rectangle</a></li>
+    </ul>
+</nav>
+</div>
+<footer>
+    Documentation generated by <a href='https://github.com/jsdoc/jsdoc'>JSDoc 4.0.0</a> on Wed Feb 01 2023 10:35:24
+    GMT+0300 (Москва, стандартное время)
+</footer>
+<script> prettyPrint(); </script>
+<script src='scripts/linenumber.js'></script>
+</body>
+</html>
