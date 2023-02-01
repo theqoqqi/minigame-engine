@@ -403,74 +403,6 @@
                 </dl>
             </div>
             <div class='item-container'>
-                <h4 class='name' id='createElement'><span class='type-signature'></span>createElement<span
-                    class='signature'>(elementClass, x, y, w, h)</span><span class='type-signature'></span></h4>
-                <div class='description'>
-                    Создает новый элемент, который можно будет добавить на игровое поле.
-                </div>
-                <h5>Параметры:</h5>
-                <table class='params'>
-                    <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Тип</th>
-                        <th class='last'>Описание</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class='name'><code>elementClass</code></td>
-                        <td class='type'>
-                            <span class='param-type'>string</span>
-                        </td>
-                        <td class='description last'>Класс элемента. Служит одновременно для определения типа элемента и
-                            как
-                            css-класс.
-                            Может быть любой строкой, состоящей из английских букв, цифр и символов "-" и "_".
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class='name'><code>x</code></td>
-                        <td class='type'>
-                            <span class='param-type'>number</span>
-                        </td>
-                        <td class='description last'>X-координата элемента.</td>
-                    </tr>
-                    <tr>
-                        <td class='name'><code>y</code></td>
-                        <td class='type'>
-                            <span class='param-type'>number</span>
-                        </td>
-                        <td class='description last'>Y-координата элемента.</td>
-                    </tr>
-                    <tr>
-                        <td class='name'><code>w</code></td>
-                        <td class='type'>
-                            <span class='param-type'>number</span>
-                        </td>
-                        <td class='description last'>Ширина элемента.</td>
-                    </tr>
-                    <tr>
-                        <td class='name'><code>h</code></td>
-                        <td class='type'>
-                            <span class='param-type'>number</span>
-                        </td>
-                        <td class='description last'>Высота элемента.</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <dl class='details'>
-                    <dt class='tag-source'>Source:</dt>
-                    <dd class='tag-source'>
-                        <ul class='dummy'>
-                            <li>
-                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line162'>line 162</a>
-                            </li>
-                        </ul>
-                    </dd>
-                </dl>
-            </div>
-            <div class='item-container'>
                 <h4 class='name' id='setWorldSize'><span class='type-signature'></span>setWorldSize<span
                     class='signature'>(width, height)</span><span
                     class='type-signature'></span></h4>
@@ -509,50 +441,6 @@
                         <ul class='dummy'>
                             <li>
                                 <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line177'>line 177</a>
-                            </li>
-                        </ul>
-                    </dd>
-                </dl>
-            </div>
-            <div class='item-container'>
-                <h4 class='name' id='moveElementToRandomFreePlace'><span
-                    class='type-signature'></span>moveElementToRandomFreePlace<span
-                    class='signature'>($element, obstacleClasses)</span><span class='type-signature'></span></h4>
-                <div class='description'>
-                    Перемещает элемент в случайное свободное место, учитывая препятствия.
-                </div>
-                <h5>Параметры:</h5>
-                <table class='params'>
-                    <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Тип</th>
-                        <th class='last'>Описание</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class='name'><code>$element</code></td>
-                        <td class='type'>
-                            <span class='param-type'>jQuery</span>
-                        </td>
-                        <td class='description last'>Элемент, который нужно переместить.</td>
-                    </tr>
-                    <tr>
-                        <td class='name'><code>obstacleClasses</code></td>
-                        <td class='type'>
-                            <span class='param-type'>string[]</span>
-                        </td>
-                        <td class='description last'>Список классов, которые считаются препятствиями.</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <dl class='details'>
-                    <dt class='tag-source'>Source:</dt>
-                    <dd class='tag-source'>
-                        <ul class='dummy'>
-                            <li>
-                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line190'>line 190</a>
                             </li>
                         </ul>
                     </dd>
@@ -677,145 +565,6 @@
                 </span>
             </div>
             <div class='item-container'>
-                <h4 class='name' id='isElementsIntersects'><span
-                    class='type-signature'></span>isElementsIntersects<span
-                    class='signature'>($a, $b)</span><span class='type-signature'> &rarr; {boolean}</span></h4>
-                <div class='description'>
-                    Проверяет, пересекаются ли элементы.
-                </div>
-                <h5>Параметры:</h5>
-                <table class='params'>
-                    <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Тип</th>
-                        <th class='last'>Описание</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class='name'><code>$a</code></td>
-                        <td class='type'>
-                            <span class='param-type'>jQuery</span>
-                        </td>
-                        <td class='description last'>Первый элемент.</td>
-                    </tr>
-                    <tr>
-                        <td class='name'><code>$b</code></td>
-                        <td class='type'>
-                            <span class='param-type'>jQuery</span>
-                        </td>
-                        <td class='description last'>Второй элемент.</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <dl class='details'>
-                    <dt class='tag-source'>Source:</dt>
-                    <dd class='tag-source'>
-                        <ul class='dummy'>
-                            <li>
-                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line253'>line 253</a>
-                            </li>
-                        </ul>
-                    </dd>
-                </dl>
-                <h5>Возвращает:</h5>
-                <span class='param-type'>
-                    boolean
-                </span>
-                <span class='param-desc'>
-                    <code>true</code>, если элементы пересекаются, иначе - <code>false</code>.
-                </span>
-            </div>
-            <div class='item-container'>
-                <h4 class='name' id='getAllElementsOfClasses'><span
-                    class='type-signature'></span>getAllElementsOfClasses<span class='signature'>(classes)</span><span
-                    class='type-signature'> &rarr; {jQuery}</span></h4>
-                <div class='description'>
-                    Ищет все элементы, имеющие указанные классы.
-                </div>
-                <h5>Параметры:</h5>
-                <table class='params'>
-                    <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Тип</th>
-                        <th class='last'>Описание</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class='name'><code>classes</code></td>
-                        <td class='type'>
-                            <span class='param-type'>string[]</span>
-                        </td>
-                        <td class='description last'>Список классов, по которым нужно фильтровать элементы.</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <dl class='details'>
-                    <dt class='tag-source'>Source:</dt>
-                    <dd class='tag-source'>
-                        <ul class='dummy'>
-                            <li>
-                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line267'>line 267</a>
-                            </li>
-                        </ul>
-                    </dd>
-                </dl>
-                <h5>Возвращает:</h5>
-                <span class='param-type'>
-                    jQuery[]
-                </span>
-                <span class='param-desc'>
-                    Список элементов, которые подходят под указанные классы.
-                </span>
-            </div>
-            <div class='item-container'>
-                <h4 class='name' id='getAllElementsOfClass'><span
-                    class='type-signature'></span>getAllElementsOfClass<span
-                    class='signature'>(elementClass)</span><span class='type-signature'> &rarr; {jQuery}</span></h4>
-                <div class='description'>
-                    Ищет все элементы, имеющие указанный класс.
-                </div>
-                <h5>Параметры:</h5>
-                <table class='params'>
-                    <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Тип</th>
-                        <th class='last'>Описание</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class='name'><code>elementClass</code></td>
-                        <td class='type'>
-                            <span class='param-type'>string</span>
-                        </td>
-                        <td class='description last'>Класс, по которому нужно фильтровать элементы.</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <dl class='details'>
-                    <dt class='tag-source'>Source:</dt>
-                    <dd class='tag-source'>
-                        <ul class='dummy'>
-                            <li>
-                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line288'>line 288</a>
-                            </li>
-                        </ul>
-                    </dd>
-                </dl>
-                <h5>Возвращает:</h5>
-                <span class='param-type'>
-                    jQuery[]
-                </span>
-                <span class='param-desc'>
-                    Список элементов, которые подходят под указанный класс.
-                </span>
-            </div>
-            <div class='item-container'>
                 <h4 class='name' id='getRandomPosition'><span class='type-signature'></span>getRandomPosition<span
                     class='signature'>()</span><span class='type-signature'> &rarr; {<a
                     href='index.html#Position'>Position</a>}</span></h4>
@@ -842,6 +591,124 @@
             </div>
 
             <h3 class='subsection-title'>Управление элементами на игровом поле</h3>
+            <div class='item-container'>
+                <h4 class='name' id='createElement'><span class='type-signature'></span>createElement<span
+                    class='signature'>(elementClass, x, y, w, h)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Создает новый элемент, который можно будет добавить на игровое поле.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>elementClass</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='description last'>Класс элемента. Служит одновременно для определения типа элемента и
+                            как
+                            css-класс.
+                            Может быть любой строкой, состоящей из английских букв, цифр и символов "-" и "_".
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>x</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>X-координата элемента.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>y</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Y-координата элемента.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>w</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Ширина элемента.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>h</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>Высота элемента.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line162'>line 162</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='moveElementBy'><span class='type-signature'></span>moveElementBy<span
+                    class='signature'>($element, x, y)</span><span class='type-signature'></span></h4>
+                <div class='description'>
+                    Перемещает элемент на указанное расстояние.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, который нужно переместить на указанное расстояние.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>x</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>На сколько нужно переместить элемент по X-координате.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>y</code></td>
+                        <td class='type'>
+                            <span class='param-type'>number</span>
+                        </td>
+                        <td class='description last'>На сколько нужно переместить элемент по Y-координате.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line345'>line 345</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
             <div class='item-container'>
                 <h4 class='name' id='moveElementAvoidingObstacles'><span
                     class='type-signature'></span>moveElementAvoidingObstacles<span
@@ -901,10 +768,11 @@
                 </dl>
             </div>
             <div class='item-container'>
-                <h4 class='name' id='moveElementBy'><span class='type-signature'></span>moveElementBy<span
-                    class='signature'>($element, x, y)</span><span class='type-signature'></span></h4>
+                <h4 class='name' id='moveElementToRandomFreePlace'><span
+                    class='type-signature'></span>moveElementToRandomFreePlace<span
+                    class='signature'>($element, obstacleClasses)</span><span class='type-signature'></span></h4>
                 <div class='description'>
-                    Перемещает элемент на указанное расстояние.
+                    Перемещает элемент в случайное свободное место, учитывая препятствия.
                 </div>
                 <h5>Параметры:</h5>
                 <table class='params'>
@@ -921,21 +789,14 @@
                         <td class='type'>
                             <span class='param-type'>jQuery</span>
                         </td>
-                        <td class='description last'>Элемент, который нужно переместить на указанное расстояние.</td>
+                        <td class='description last'>Элемент, который нужно переместить.</td>
                     </tr>
                     <tr>
-                        <td class='name'><code>x</code></td>
+                        <td class='name'><code>obstacleClasses</code></td>
                         <td class='type'>
-                            <span class='param-type'>number</span>
+                            <span class='param-type'>string[]</span>
                         </td>
-                        <td class='description last'>На сколько нужно переместить элемент по X-координате.</td>
-                    </tr>
-                    <tr>
-                        <td class='name'><code>y</code></td>
-                        <td class='type'>
-                            <span class='param-type'>number</span>
-                        </td>
-                        <td class='description last'>На сколько нужно переместить элемент по Y-координате.</td>
+                        <td class='description last'>Список классов, которые считаются препятствиями.</td>
                     </tr>
                     </tbody>
                 </table>
@@ -944,7 +805,7 @@
                     <dd class='tag-source'>
                         <ul class='dummy'>
                             <li>
-                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line345'>line 345</a>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line190'>line 190</a>
                             </li>
                         </ul>
                     </dd>
@@ -1051,52 +912,6 @@
                 </span>
                 <span class='param-desc'>
                     <code>true</code> - если элемент имеет указанный класс, иначе - <code>false</code>.
-                </span>
-            </div>
-            <div class='item-container'>
-                <h4 class='name' id='getElementBoundingRect'><span
-                    class='type-signature'></span>getElementBoundingRect<span
-                    class='signature'>($element)</span><span class='type-signature'> &rarr; {<a
-                    href='index.html#Rectangle'>Rectangle</a>}</span></h4>
-                <div class='description'>
-                    Возвращает объект с информацией о прямоугольнике, описывающем занимаемую элементом область.
-                </div>
-                <h5>Параметры:</h5>
-                <table class='params'>
-                    <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Тип</th>
-                        <th class='last'>Описание</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class='name'><code>$element</code></td>
-                        <td class='type'>
-                            <span class='param-type'>jQuery</span>
-                        </td>
-                        <td class='description last'>Элемент, о занимаемой области которого нужно получить информацию.
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <dl class='details'>
-                    <dt class='tag-source'>Source:</dt>
-                    <dd class='tag-source'>
-                        <ul class='dummy'>
-                            <li>
-                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line381'>line 381</a>
-                            </li>
-                        </ul>
-                    </dd>
-                </dl>
-                <h5>Возвращает:</h5>
-                <span class='param-type'>
-                    <a href='index.html#Rectangle'>Rectangle</a>
-                </span>
-                <span class='param-desc'>
-                    прямоугольник, описывающий занимаемую элементом область.
                 </span>
             </div>
             <div class='item-container'>
@@ -1287,6 +1102,191 @@
                 </span>
                 <span class='param-desc'>
                     координаты указанного элемента.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='isElementsIntersects'><span
+                    class='type-signature'></span>isElementsIntersects<span
+                    class='signature'>($a, $b)</span><span class='type-signature'> &rarr; {boolean}</span></h4>
+                <div class='description'>
+                    Проверяет, пересекаются ли элементы.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$a</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Первый элемент.</td>
+                    </tr>
+                    <tr>
+                        <td class='name'><code>$b</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Второй элемент.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line253'>line 253</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    boolean
+                </span>
+                <span class='param-desc'>
+                    <code>true</code>, если элементы пересекаются, иначе - <code>false</code>.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getElementBoundingRect'><span
+                    class='type-signature'></span>getElementBoundingRect<span
+                    class='signature'>($element)</span><span class='type-signature'> &rarr; {<a
+                    href='index.html#Rectangle'>Rectangle</a>}</span></h4>
+                <div class='description'>
+                    Возвращает объект с информацией о прямоугольнике, описывающем занимаемую элементом область.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>$element</code></td>
+                        <td class='type'>
+                            <span class='param-type'>jQuery</span>
+                        </td>
+                        <td class='description last'>Элемент, о занимаемой области которого нужно получить информацию.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line381'>line 381</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    <a href='index.html#Rectangle'>Rectangle</a>
+                </span>
+                <span class='param-desc'>
+                    прямоугольник, описывающий занимаемую элементом область.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getAllElementsOfClasses'><span
+                    class='type-signature'></span>getAllElementsOfClasses<span class='signature'>(classes)</span><span
+                    class='type-signature'> &rarr; {jQuery}</span></h4>
+                <div class='description'>
+                    Ищет все элементы, имеющие указанные классы.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>classes</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string[]</span>
+                        </td>
+                        <td class='description last'>Список классов, по которым нужно фильтровать элементы.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line267'>line 267</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    jQuery[]
+                </span>
+                <span class='param-desc'>
+                    Список элементов, которые подходят под указанные классы.
+                </span>
+            </div>
+            <div class='item-container'>
+                <h4 class='name' id='getAllElementsOfClass'><span
+                    class='type-signature'></span>getAllElementsOfClass<span
+                    class='signature'>(elementClass)</span><span class='type-signature'> &rarr; {jQuery}</span></h4>
+                <div class='description'>
+                    Ищет все элементы, имеющие указанный класс.
+                </div>
+                <h5>Параметры:</h5>
+                <table class='params'>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
+                        <th class='last'>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class='name'><code>elementClass</code></td>
+                        <td class='type'>
+                            <span class='param-type'>string</span>
+                        </td>
+                        <td class='description last'>Класс, по которому нужно фильтровать элементы.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <dl class='details'>
+                    <dt class='tag-source'>Source:</dt>
+                    <dd class='tag-source'>
+                        <ul class='dummy'>
+                            <li>
+                                <a href='engine.js.html'>engine.js</a>, <a href='engine.js.html#line288'>line 288</a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                <h5>Возвращает:</h5>
+                <span class='param-type'>
+                    jQuery[]
+                </span>
+                <span class='param-desc'>
+                    Список элементов, которые подходят под указанный класс.
                 </span>
             </div>
 
@@ -2024,26 +2024,26 @@
 
         <li><h5>Управление игровым полем</h5></li>
         <li><a href='index.html#addElementToWorld'>addElementToWorld</a></li>
-        <li><a href='index.html#createElement'>createElement</a></li>
         <li><a href='index.html#setWorldSize'>setWorldSize</a></li>
-        <li><a href='index.html#moveElementToRandomFreePlace'>moveElementToRandomFreePlace</a></li>
         <li><a href='index.html#findRandomFreePlaceForElement'>findRandomFreePlaceForElement</a></li>
         <li><a href='index.html#isPlaceFreeForElement'>isPlaceFreeForElement</a></li>
-        <li><a href='index.html#isElementsIntersects'>isElementsIntersects</a></li>
-        <li><a href='index.html#getAllElementsOfClasses'>getAllElementsOfClasses</a></li>
-        <li><a href='index.html#getAllElementsOfClass'>getAllElementsOfClass</a></li>
         <li><a href='index.html#getRandomPosition'>getRandomPosition</a></li>
 
         <li><h5>Управление элементами на игровом поле</h5></li>
-        <li><a href='index.html#moveElementAvoidingObstacles'>moveElementAvoidingObstacles</a></li>
+        <li><a href='index.html#createElement'>createElement</a></li>
         <li><a href='index.html#moveElementBy'>moveElementBy</a></li>
+        <li><a href='index.html#moveElementAvoidingObstacles'>moveElementAvoidingObstacles</a></li>
+        <li><a href='index.html#moveElementToRandomFreePlace'>moveElementToRandomFreePlace</a></li>
         <li><a href='index.html#setElementHasClass'>setElementHasClass</a></li>
         <li><a href='index.html#isElementHasClass'>isElementHasClass</a></li>
-        <li><a href='index.html#getElementBoundingRect'>getElementBoundingRect</a></li>
         <li><a href='index.html#setElementSize'>setElementSize</a></li>
         <li><a href='index.html#getElementSize'>getElementSize</a></li>
         <li><a href='index.html#setElementPosition'>setElementPosition</a></li>
         <li><a href='index.html#getElementPosition'>getElementPosition</a></li>
+        <li><a href='index.html#isElementsIntersects'>isElementsIntersects</a></li>
+        <li><a href='index.html#getElementBoundingRect'>getElementBoundingRect</a></li>
+        <li><a href='index.html#getAllElementsOfClasses'>getAllElementsOfClasses</a></li>
+        <li><a href='index.html#getAllElementsOfClass'>getAllElementsOfClass</a></li>
 
         <li><h5>Работа с клавиатурой</h5></li>
         <li><a href='index.html#bindKeyboardListeners'>bindKeyboardListeners</a></li>
